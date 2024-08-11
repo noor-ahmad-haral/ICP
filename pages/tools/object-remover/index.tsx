@@ -1,78 +1,183 @@
-// pages/object-remover/index.tsx
-import React, { useState } from 'react';
-import 'tailwindcss/tailwind.css';
+import { useCallback, useEffect, useRef } from "react"
 
-const ObjectRemover: React.FC = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [brushSize, setBrushSize] = useState<number>(10);
-  const [beforeAfter, setBeforeAfter] = useState<'before' | 'after'>('before');
+import useInputImage from "@/hooks/useInputImage"
+import { keepGUIAlive } from "@/lib/utils"
+import { getServerConfig } from "@/lib/api"
+import Header from "@/components/RemoverHeader"
+import Workspace from "@/components/Workspace"
+import FileSelect from "@/components/FileSelect"
+import { Toaster } from "@/components/ui/toaster"
+import { useStore } from "@/lib/states"
+import { useWindowSize } from "react-use"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ThemeProvider } from "next-themes"
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+const SUPPORTED_FILE_TYPE = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/bmp",
+  "image/tiff",
+]
+const queryClient = new QueryClient()
+
+function Home() {
+  const [file, updateAppState, setServerConfig, setFile] = useStore((state) => [
+    state.file,
+    state.updateAppState,
+    state.setServerConfig,
+    state.setFile,
+  ])
+
+  const userInputImage = useInputImage()
+
+  const windowSize = useWindowSize()
+
+  useEffect(() => {
+    if (userInputImage) {
+      setFile(userInputImage)
     }
-  };
+  }, [userInputImage, setFile])
+
+  useEffect(() => {
+    updateAppState({ windowSize })
+  }, [windowSize])
+
+  useEffect(() => {
+    const fetchServerConfig = async () => {
+      const serverConfig = await getServerConfig()
+      setServerConfig(serverConfig)
+      if (serverConfig?.isDesktop) {
+        // Keeping GUI Window Open
+        keepGUIAlive()
+      }
+    }
+    fetchServerConfig()
+  }, [])
+
+  const dragCounter = useRef(0)
+
+  const handleDrag = useCallback((event: any) => {
+    event.preventDefault()
+    event.stopPropagation()
+  }, [])
+
+  const handleDragIn = useCallback((event: any) => {
+    event.preventDefault()
+    event.stopPropagation()
+    dragCounter.current += 1
+  }, [])
+
+  const handleDragOut = useCallback((event: any) => {
+    event.preventDefault()
+    event.stopPropagation()
+    dragCounter.current -= 1
+    if (dragCounter.current > 0) return
+  }, [])
+
+  const handleDrop = useCallback((event: any) => {
+    event.preventDefault()
+    event.stopPropagation()
+    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      if (event.dataTransfer.files.length > 1) {
+        // setToastState({
+        //   open: true,
+        //   desc: "Please drag and drop only one file",
+        //   state: "error",
+        //   duration: 3000,
+        // })
+      } else {
+        const dragFile = event.dataTransfer.files[0]
+        const fileType = dragFile.type
+        if (SUPPORTED_FILE_TYPE.includes(fileType)) {
+          setFile(dragFile)
+        } else {
+          // setToastState({
+          //   open: true,
+          //   desc: "Please drag and drop an image file",
+          //   state: "error",
+          //   duration: 3000,
+          // })
+        }
+      }
+      event.dataTransfer.clearData()
+    }
+  }, [])
+
+  const onPaste = useCallback((event: any) => {
+    // TODO: when sd side panel open, ctrl+v not work
+    // https://htmldom.dev/paste-an-image-from-the-clipboard/
+    if (!event.clipboardData) {
+      return
+    }
+    const clipboardItems = event.clipboardData.items
+    const items: DataTransferItem[] = [].slice
+      .call(clipboardItems)
+      .filter((item: DataTransferItem) => {
+        // Filter the image items only
+        return item.type.indexOf("image") !== -1
+      })
+
+    if (items.length === 0) {
+      return
+    }
+
+    event.preventDefault()
+    event.stopPropagation()
+
+    // TODO: add confirm dialog
+
+    const item = items[0]
+    // Get the blob of image
+    const blob = item.getAsFile()
+    if (blob) {
+      setFile(blob)
+    }
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener("dragenter", handleDragIn)
+    window.addEventListener("dragleave", handleDragOut)
+    window.addEventListener("dragover", handleDrag)
+    window.addEventListener("drop", handleDrop)
+    window.addEventListener("paste", onPaste)
+    return function cleanUp() {
+      window.removeEventListener("dragenter", handleDragIn)
+      window.removeEventListener("dragleave", handleDragOut)
+      window.removeEventListener("dragover", handleDrag)
+      window.removeEventListener("drop", handleDrop)
+      window.removeEventListener("paste", onPaste)
+    }
+  })
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-10">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6">Remove unwanted objects from your photos with AI</h1>
-      <p className="text-lg text-gray-600 mb-8 text-center max-w-2xl">
-        The best free tool to clean up your pictures and remove any object, person, or watermark in 3 seconds. Easily delete undesired elements online from your image by painting over them.
-      </p>
-      <div className="mb-6">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="hidden"
-          id="file-upload"
-        />
-        <label htmlFor="file-upload" className="bg-purple-600 text-white py-3 px-6 rounded-lg shadow-md cursor-pointer transition transform hover:bg-purple-700 hover:scale-105">
-          Select a picture
-        </label>
-      </div>
-      {selectedImage && (
-        <div className="relative mb-10 p-4 bg-white rounded-lg shadow-lg">
-          <img src={selectedImage} alt="Selected" className="max-w-full max-h-96 rounded-lg" />
-          <div className="absolute top-4 left-4 flex items-center bg-white bg-opacity-75 p-2 rounded-lg shadow-md">
-            <label htmlFor="brushSize" className="mr-2 text-gray-700">Brush Size</label>
-            <input
-              id="brushSize"
-              type="range"
-              min="1"
-              max="100"
-              value={brushSize}
-              onChange={(e) => setBrushSize(Number(e.target.value))}
-              className="mr-4"
-            />
-          </div>
-          <div className="absolute top-4 right-4 flex">
-            <button
-              className={`py-2 px-4 rounded-lg shadow-md mr-2 transition transform ${beforeAfter === 'before' ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-              onClick={() => setBeforeAfter('before')}
-            >
-              Before
-            </button>
-            <button
-              className={`py-2 px-4 rounded-lg shadow-md transition transform ${beforeAfter === 'after' ? 'bg-green-600 text-white hover:bg-green-700' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-              onClick={() => setBeforeAfter('after')}
-            >
-              After
-            </button>
-          </div>
-        </div>
-      )}
-      <div className="text-center">
-        <button className="bg-blue-600 text-white py-3 px-6 rounded-lg shadow-md mr-4 transition transform hover:bg-blue-700 hover:scale-105">Edit in Photoroom</button>
-        <button className="bg-green-600 text-white py-3 px-6 rounded-lg shadow-md transition transform hover:bg-green-700 hover:scale-105">Download</button>
-      </div>
-    </div>
-  );
-};
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider defaultTheme="dark" disableTransitionOnChange>
 
-export default ObjectRemover;
+        <TooltipProvider>
+
+          <main className="flex min-h-screen flex-col items-center justify-between w-full bg-[radial-gradient(circle_at_1px_1px,_#8e8e8e8e_1px,_transparent_0)] [background-size:20px_20px] bg-repeat">
+            <Toaster />
+            <Header />
+            <Workspace />
+            {!file ? (
+              <FileSelect
+                onSelection={async (f) => {
+                  setFile(f)
+                }}
+              />
+            ) : (
+              <></>
+            )}
+          </main>
+        </TooltipProvider>
+      </ThemeProvider>
+
+    </QueryClientProvider>
+
+
+  )
+}
+
+export default Home
