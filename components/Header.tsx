@@ -8,6 +8,10 @@ const Header = () => {
   const [showPopup, setShowPopup] = useState(false);
   const { data: session } = useSession();
 
+  // Console the sessions object
+  console.log(session);
+
+
   useEffect(() => {
     if (session) {
       setIsLoggedIn(true);
