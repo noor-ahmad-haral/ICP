@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/footer";
 import { ClipLoader } from 'react-spinners';
 import CompareImage from 'react-compare-image';
-
+import ReleatedTools from '@/components/releatedTools';
 const AIColorizer: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedSampleImage, setSelectedSampleImage] = useState<string | null>(null);
@@ -218,6 +218,7 @@ const AIColorizer: React.FC = () => {
           )}
         </div>
       </div>
+      <ReleatedTools />
       <Footer />
     </div>
   );

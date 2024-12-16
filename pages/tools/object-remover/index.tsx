@@ -26,30 +26,30 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const maskCanvasRef = useRef<HTMLCanvasElement>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const maskCtxRef = useRef<CanvasRenderingContext2D | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
-  
+
   // New refs for smooth drawing
   const lastPosRef = useRef<{ x: number; y: number } | null>(null);
 
   const initializeCanvas = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, image: HTMLImageElement) => {
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
-    
+
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
     ctx.scale(dpr, dpr);
-    
+
     const scale = Math.min(
       rect.width / image.width,
       rect.height / image.height
     );
-    
+
     const centerShiftX = (rect.width - image.width * scale) / 2;
     const centerShiftY = (rect.height - image.height * scale) / 2;
 
@@ -63,15 +63,15 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
     const maskCanvas = maskCanvasRef.current;
     const ctx = canvas.getContext('2d');
     const maskCtx = maskCanvas.getContext('2d');
-    
+
     if (!ctx || !maskCtx) return;
-    
+
     ctxRef.current = ctx;
     maskCtxRef.current = maskCtx;
 
     const image = new Image();
     image.src = selectedImage;
-    
+
     const handleImageLoad = () => {
       if (!canvas || !ctx || !maskCanvas || !maskCtx) return;
 
@@ -89,7 +89,7 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
 
       // Clear mask canvas
       maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
-      
+
       imageRef.current = image;
     };
 
@@ -140,14 +140,14 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
     if (!maskCanvasRef.current || !maskCtxRef.current) return;
 
     const { x, y } = getMousePos(event.nativeEvent, maskCanvasRef.current);
-    
+
     const ctx = maskCtxRef.current;
     ctx.beginPath();
     ctx.moveTo(x, y);
-    
+
     // Reset last position
     lastPosRef.current = { x, y };
-    
+
     setIsDrawing(true);
   };
 
@@ -155,7 +155,7 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
     if (!isDrawing || !maskCanvasRef.current || !maskCtxRef.current) return;
 
     const { x, y } = getMousePos(event.nativeEvent, maskCanvasRef.current);
-    
+
     const ctx = maskCtxRef.current;
     ctx.lineWidth = brushSize;
     ctx.lineCap = 'round';
@@ -165,14 +165,14 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
     // Smooth out drawing with quadratic curve interpolation
     if (lastPosRef.current) {
       const { x: lastX, y: lastY } = lastPosRef.current;
-      
+
       // Control point for quadratic curve (midpoint)
       const cpx = (lastX + x) / 2;
       const cpy = (lastY + y) / 2;
 
       ctx.quadraticCurveTo(cpx, cpy, x, y);
       ctx.stroke();
-      
+
       // Move to the current point
       ctx.beginPath();
       ctx.moveTo(x, y);
@@ -184,7 +184,7 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
 
   const finishDrawing = () => {
     if (!maskCtxRef.current) return;
-    
+
     maskCtxRef.current.closePath();
     lastPosRef.current = null;  // Reset last position
     setIsDrawing(false);
@@ -192,43 +192,43 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
 
   const processImage = async () => {
     if (!canvasRef.current || !maskCanvasRef.current) return;
-  
+
     setIsProcessing(true);
-  
+
     try {
       const imageBlob = await new Promise<Blob>((resolve) =>
         canvasRef.current!.toBlob((blob) => resolve(blob!), "image/jpeg")
       );
-  
+
       const maskBlob = await new Promise<Blob>((resolve) =>
         maskCanvasRef.current!.toBlob((blob) => resolve(blob!), "image/png")
       );
-  
+
       const formData = new FormData();
       formData.append("image", imageBlob, "image.jpg");
       formData.append("mask", maskBlob, "mask.png");
-  
+
       const response = await fetch("http://localhost:8000/inpaint/", {
         method: "POST",
         body: formData,
       });
-  
+
       console.log("API Response Status:", response.status);
-  
+
       if (!response.ok) {
         throw new Error(`Server error: ${response.status}`);
       }
-  
+
       const resultBlob = await response.blob();
       const reader = new FileReader();
-  
-      reader.onloadend = () => {
-  const dataURL = reader.result as string;
-  setProcessedImage(dataURL);
-  setBeforeAfter("after");
-};
 
-  
+      reader.onloadend = () => {
+        const dataURL = reader.result as string;
+        setProcessedImage(dataURL);
+        setBeforeAfter("after");
+      };
+
+
       reader.readAsDataURL(resultBlob);
     } catch (error) {
       console.error("Error processing image:", error);
@@ -243,7 +243,7 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
       alert("No image available to download.");
       return;
     }
-  
+
     const imageToDownload = processedImage || canvasRef.current.toDataURL('image/png');
     const link = document.createElement('a');
     link.download = 'edited-image.png';
@@ -252,28 +252,68 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
     link.click();
     document.body.removeChild(link); // Clean up
   };
-  
+
   return (
     <Layout>
-      <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
-        <div className="text-center mb-8">
+      <div className="flex flex-col items-center min-h-screen p-4">
+        {/* <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2 flex items-center justify-center">
             <Upload className="mr-2" /> Remove unwanted objects from your photos with AI
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Paint over the objects you want to remove and let AI do the magic.
           </p>
-        </div>
+        </div> */}
 
+        <div className='flex justify-center items-center gap-12 max-w-[1000px] mx-auto my-32'>
+          <div className='flex flex-col justify-start items-start gap-2'>
+            <h1 className="text-4xl font-bold mb-2 flex items-start justify-start">
+              {/* <Upload className="mr-2" />  */}
+              Remove unwanted objects from your photos with AI
+            </h1>          <p className="text-gray-600 max-w-2xl ">
+              Paint over the objects you want to remove and let AI do the magic.
+            </p>
+          </div>
+          <div className="relative">
+            <video
+              className="h-auto sm:hidden w-full"
+              loop
+              autoPlay
+              playsInline
+              muted
+            >
+              <source
+                src="https://cdn.hama.app/assets/inpainting_ufo_20230719.mp4"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Video for larger screens */}
+            <video
+              className="h-auto hidden sm:block w-[422px]"
+              loop
+              autoPlay
+              playsInline
+              muted
+            >
+              <source
+                src="https://cdn.hama.app/assets/inpainting_ufo_20230719_desktop.mp4"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
         {!selectedImage ? (
           <div
-            className="bg-white rounded-lg shadow-lg p-8 w-full max-w-xl text-center"
+            className="bg-white rounded-lg p-8 w-full max-w-2xl text-center border-dashed border-2 border-gray-200"
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
           >
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors mb-2"
+              className="bg-black text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors mb-2"
             >
               + Select a picture
             </button>
@@ -299,11 +339,9 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
                 ))}
               </div>
             </div>
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
-               <HamaTips />
-            </div>
+
           </div>
-          
+
         ) : (
           <div className="bg-white rounded-lg shadow-lg p-4 w-full max-w-4xl">
             <div className="flex items-center justify-between mb-4">
@@ -324,11 +362,10 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
                 {(['before', 'after'] as const).map((mode) => (
                   <button
                     key={mode}
-                    className={`px-4 py-2 text-sm font-medium rounded-md ${
-                      beforeAfter === mode
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-200 text-gray-700'
-                    }`}
+                    className={`px-4 py-2 text-sm font-medium rounded-md ${beforeAfter === mode
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-200 text-gray-700'
+                      }`}
                     onClick={() => setBeforeAfter(mode)}
                     disabled={mode === 'after' && !processedImage}
                   >
@@ -357,9 +394,9 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
                   />
                 </>
               ) : (
-                <img 
-                  src={processedImage!} 
-                  alt="Processed" 
+                <img
+                  src={processedImage!}
+                  alt="Processed"
                   className="w-full h-full object-contain"
                 />
               )}
@@ -389,11 +426,16 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
                 <Download className="mr-2" /> Download
               </button>
             </div>
-            
+
           </div>
-          
+
         )}
+        <div className=" flex items-center justify-center bg-gray-50 my-2 rounded-xl">
+          <HamaTips />
+        </div>
+        
       </div>
+
     </Layout>
   );
 };

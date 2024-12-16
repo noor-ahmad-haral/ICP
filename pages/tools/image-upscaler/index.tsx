@@ -180,6 +180,41 @@ const SmartImageUpscaler: React.FC = () => {
           </div>
         </div>
       </div>
+      <div className='flex justify-center items-center gap-12 max-w-[1200px] mx-auto my-32'>
+        <div className='flex flex-col justify-start items-start gap-2'>
+          <h1 className='font-bold max-w-[500px] text-xl'>Remove backgrounds 100% automatically in 5 seconds with one click</h1>
+          <p className='max-w-[500px] text-[#454545]'>Thanks to remove.bg's clever AI, you can slash editing time - and have more fun!
+            <br />
+            No matter if you want to make a background transparent (PNG), add a white background to a photo, extract or isolate the subject, or get the cutout of a photo - you can do all this and more with remove.bg, the AI background remover for professionals.</p>
+        </div>
+        <div>
+          <img src="/all-pages-2.png" alt="" className='w-[250px]' />
+        </div>
+      </div>
+      <div className='flex justify-center items-center gap-12 max-w-[1200px] mx-auto my-32'>
+        <div>
+          <img src="/all-pages-2.png" alt="" className='w-[250px]' />
+        </div>
+        <div className='flex flex-col justify-start items-start gap-2'>
+          <h1 className='font-bold max-w-[500px] text-xl'>Remove backgrounds 100% automatically in 5 seconds with one click</h1>
+          <p className='max-w-[500px] text-[#454545]'>Thanks to remove.bg's clever AI, you can slash editing time - and have more fun!
+            <br />
+            No matter if you want to make a background transparent (PNG), add a white background to a photo, extract or isolate the subject, or get the cutout of a photo - you can do all this and more with remove.bg, the AI background remover for professionals.</p>
+        </div>
+
+      </div>
+      <div className='flex justify-center items-center gap-12 max-w-[1200px] mx-auto my-32'>
+
+        <div className='flex flex-col justify-start items-start gap-2'>
+          <h1 className='font-bold max-w-[500px] text-xl'>Remove backgrounds 100% automatically in 5 seconds with one click</h1>
+          <p className='max-w-[500px] text-[#454545]'>Thanks to remove.bg's clever AI, you can slash editing time - and have more fun!
+            <br />
+            No matter if you want to make a background transparent (PNG), add a white background to a photo, extract or isolate the subject, or get the cutout of a photo - you can do all this and more with remove.bg, the AI background remover for professionals.</p>
+        </div>
+        <div>
+          <img src="/all-pages-2.png" alt="" className='w-[250px]' />
+        </div>
+      </div>
       <Footer />
     </div>
   );

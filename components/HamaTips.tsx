@@ -3,7 +3,7 @@ import Link from "next/link"; // Import Link from Next.js
 
 const HamaTips: React.FC = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center bg-white p-6 md:p-12 gap-6">
+    <div className="flex flex-col md:flex-row items-center bg-white p-6 md:p-12 gap-6 rounded-xl ">
       {/* Video Section */}
       <div className="w-full md:w-1/2">
         <video

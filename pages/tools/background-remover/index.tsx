@@ -103,7 +103,7 @@
 //       const maxWidth = 300;
 //       const maxHeight = 300;
 //       const aspectRatio = img.width / img.height;
-      
+
 //       let newWidth = maxWidth;
 //       let newHeight = maxWidth / aspectRatio;
 
@@ -357,11 +357,22 @@ import axios from 'axios';
 import Header from '@/components/Header';
 import Footer from '@/components/footer';
 import { Brush } from 'lucide-react';
+import CompareImage from 'react-compare-image';
 
 const sampleImages = [
   { src: '/roll_items/roll_items01.webp', alt: 'Sample Image 1' },
   { src: '/roll_items/roll_items02.webp', alt: 'Sample Image 2' },
   { src: '/roll_items/roll_items03.webp', alt: 'Sample Image 3' },
+];
+
+
+
+const CompareImages = [
+  { originalImageUrl: '/compareimages/animals-outstanding-quality-v2.jpg', imageUrl: '/compareimages/animals-transparent-stunning-quality-transp.png', category: 'Animals' },
+  { originalImageUrl: '/compareimages/cars-stunning-quality.jpg', imageUrl: '/compareimages/cars-stunning-quality-transp.png', category: 'Cars' },
+  { originalImageUrl: '/compareimages/graphics-original.png', imageUrl: '/compareimages/graphics-removebg.png', category: 'Graphics' },
+  { originalImageUrl: '/compareimages/people-1.jpg', imageUrl: '/compareimages/people-1-transparent2.jpg', category: 'People' },
+  { originalImageUrl: '/compareimages/products-stunning-quality-v2.jpg', imageUrl: '/compareimages/products-stunning-quality-transp.png', category: 'Products' },
 ];
 
 const BackgroundRemoverPage: React.FC = () => {
@@ -376,9 +387,11 @@ const BackgroundRemoverPage: React.FC = () => {
   const [brushSize, setBrushSize] = useState<number>(10);
   const [isErasing, setIsErasing] = useState<boolean>(false);
   const [customBackground, setCustomBackground] = useState<string | null>(null);
+  const [originalImageUrl, setOriginalImageUrl] = useState<string | null>("/roll_items/roll_items02.webp");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const brushPreviewRef = useRef<HTMLCanvasElement>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>("/roll_items/roll_items01.webp");
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -460,7 +473,7 @@ const BackgroundRemoverPage: React.FC = () => {
       const maxWidth = 300;
       const maxHeight = 300;
       const aspectRatio = img.width / img.height;
-      
+
       let newWidth = maxWidth;
       let newHeight = maxWidth / aspectRatio;
 
@@ -591,11 +604,38 @@ const BackgroundRemoverPage: React.FC = () => {
     'bg-yellow-500',
     'bg-gradient-to-r from-purple-400 via-pink-500 to-red-500',
   ];
+  const [visibleProjects, setVisibleProjects] = useState(6);
+  const [selectedCategory, setSelectedCategory] = useState("People");
+
+  const handleShowMoreProjects = () => {
+    setVisibleProjects((prev) => prev + 6);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setVisibleProjects(6); // Reset visible projects when category changes
+  };
+
+  const categories = [
+    "People",
+    "Products",
+    "Animals",
+    "Cars",
+    "Graphics",
+  ];
+
+  // Filter images based on selected category
+  const filteredImages =
+    selectedCategory === 'All'
+      ? CompareImages
+      : CompareImages.filter((image) => image.category === selectedCategory);
+
+
 
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow flex flex-col items-center justify-center bg-gray-100 p-4">
+      <main className="flex-grow flex flex-col items-center justify-center  p-4">
         <Head>
           <title>Background Remover</title>
         </Head>
@@ -736,6 +776,56 @@ const BackgroundRemoverPage: React.FC = () => {
           )}
         </div>
       </main>
+      {/* Categories Filter */}
+      <div className="w-full flex justify-center mt-4 flex-col items-center">
+        <div className="flex gap-4 overflow-x-auto px-4 pb-3">
+          {categories.map((category) => (
+            <button
+              key={category}
+              className={`px-4 py-2 rounded-full ${selectedCategory === category
+                ? 'bg-[#6e08f3] text-white'
+                : 'bg-white border-2 border-[#6e08f3] text-[#6e08f3]'
+                }`}
+              onClick={() => setSelectedCategory(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-8 relative w-full max-w-[600px] mx-2 md:mx-auto">
+        <h2 className="text-lg font-semibold text-center mb-4">Before and After</h2>
+        <div className="mt-8 space-y-6">
+          {filteredImages.map((image, index) => (
+            <div key={index} className="relative w-full max-w-lg mx-auto max-h-lg rounded-xl">
+              <CompareImage
+                leftImage={image.originalImageUrl}
+                rightImage={image.imageUrl}
+                sliderLineColor="#000"
+                sliderHandleColor="#000"
+              />
+              <div className="text-center mt-2 text-gray-600">{image.category}</div>
+            </div>
+          ))}
+          {filteredImages.length === 0 && (
+            <div className="text-center text-gray-600">No images available for this category.</div>
+          )}
+        </div>
+        <div>sdfadsfas</div>
+      </div>
+
+      <div className='flex justify-center items-center gap-12 max-w-[1200px] mx-auto my-32'>
+        <div className='flex flex-col justify-start items-start gap-2'>
+          <h1 className='font-bold max-w-[500px] text-xl'>Remove backgrounds 100% automatically in 5 seconds with one click</h1>
+          <p className='max-w-[500px] text-[#454545]'>Thanks to remove.bg's clever AI, you can slash editing time - and have more fun!
+            <br />
+            No matter if you want to make a background transparent (PNG), add a white background to a photo, extract or isolate the subject, or get the cutout of a photo - you can do all this and more with remove.bg, the AI background remover for professionals.</p>
+        </div>
+        <div>
+          <img src="/all-pages-2.png" alt="" className='w-[250px]' />
+        </div>
+      </div>
       <Footer />
     </div>
   );

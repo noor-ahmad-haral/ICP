@@ -193,10 +193,10 @@ export default function Footer() {
           <div className="space-y-8">
             <img
               alt="Image Craft Pro"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-              className="h-7"
+              src="/white-logo.png"
+              className="h-20"
             />
-            <p className="text-sm leading-6 text-gray-300">
+            <p className="text-sm leading-6 text-gray-300 max-w-[300px]">
               Making the dditing process easier by using AI tools. We are a team of software engineers and creative
             </p>
             {/* <div className="flex space-x-6">
@@ -258,7 +258,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
-          <p className="text-xs leading-5 text-gray-400">&copy; 2020 Your Company, Inc. All rights reserved.</p>
+          <p className="text-xs leading-5 text-gray-400">&copy; 2025 Your Company, Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -158,7 +158,7 @@ const focusAreas = [
 const About = () => {
   return (
     <Layout>
-      <main className="flex flex-col items-center justify-center min-h-screen p-6 md:p-24">
+      <main className="flex flex-col items-center justify-center min-h-screen">
 
         <div className="relative isolate -z-10">
           <svg

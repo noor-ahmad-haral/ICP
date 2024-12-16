@@ -32,7 +32,7 @@ const ReviewCard = ({ img }: { img: string }) => {
 
 export function MarqueeDemo() {
   return (
-    <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden">
+    <div className="relative flex lg:h-[600px] w-full flex-col items-center justify-center overflow-hidden">
       <h1 className="text-3xl font-semibold text-center mt-4 text-black">
         Trained on over a billion+ marketing images
       </h1>

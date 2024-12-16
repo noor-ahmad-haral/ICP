@@ -218,7 +218,7 @@ import Footer from '@/components/Footer';
 import FAQ from '@/components/Faq';
 import { ClipLoader } from 'react-spinners';
 import { Notifications, showNotification } from '@/components/Notification';
-
+import Photos from '@/components/Photos';
 const PRESET_PROMPTS = [
   'A serene landscape with mountains and a lake at sunset.',
   'A futuristic cityscape with flying cars and neon lights.',
@@ -303,15 +303,18 @@ const TextToImage: React.FC = () => {
   return (
     <div>
       <Header />
-      <div className="mx-auto max-w-screen-md px-4">
+      <div className="mx-auto px-4 mt-14">
+        <div className='mx-auto my-8 w-full'>
+        <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/0*Buxp3jb7KenKsqIG" alt="" className='mx-auto'/>
+        </div>
         <h1 className="mb-6 text-4xl font-bold text-center tracking-tight text-gray-900 md:text-5xl">
           Text to Image Generator
         </h1>
         <p className="mb-8 text-center text-gray-500 text-lg">
           Create stunning images from your text prompts with AI.
         </p>
-        <div className="w-full py-8">
-          <div className="flex flex-col border border-dashed border-gray-300 rounded-xl bg-gray-50 p-8">
+        <div className="w-full py-8  max-w-screen-md mx-auto ">
+          <div className="flex flex-col border border-dashed border-gray-300 rounded-xl  p-8">
             <textarea
               className="w-full p-4 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               rows={4}
@@ -392,6 +395,9 @@ const TextToImage: React.FC = () => {
         </div>
 
         {/* Integrating the FAQ component */}
+        <div className="mt-12">
+          <Photos /> 
+        </div>
         <div className="mt-12">
           <FAQ />
         </div>
