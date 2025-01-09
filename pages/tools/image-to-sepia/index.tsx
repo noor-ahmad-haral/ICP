@@ -7,7 +7,7 @@ import FAQ from "@/components/Faq";
 import { ClipLoader } from 'react-spinners';
 import CompareImage from 'react-compare-image';
 import { Notifications, showNotification } from "@/components/Notification";
-
+import ReleatedTools from '@/components/releatedTools';
 const ImageToSepia: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedSampleImage, setSelectedSampleImage] = useState<string | null>(null);
@@ -158,7 +158,7 @@ const ImageToSepia: React.FC = () => {
               </label>
             </div>
             <div className="flex justify-center space-x-4 mt-8">
-              <button className="px-6 py-2 font-bold rounded-full text-white text-base bg-indigo-500 hover:bg-indigo-600" onClick={handleStartAll}>
+              <button className="px-6 py-2 font-bold rounded-full text-white text-base bg-indigo-500 hover:bg-indigo-600 flex justify-center items-center" onClick={handleStartAll}>
                 {processing ? (
                   <>
                     <ClipLoader size={20} color={"#fff"} />
@@ -227,6 +227,7 @@ const ImageToSepia: React.FC = () => {
           <FAQ />
         </div>
       </div>
+      <ReleatedTools />
       <Footer />
       <Notifications />
     </div>

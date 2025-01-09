@@ -352,7 +352,7 @@ const TextToImage: React.FC = () => {
             </div>
             <div className="flex justify-center space-x-4 mt-8">
               <button
-                className="px-6 py-2 font-bold rounded-full text-white text-base bg-indigo-500 hover:bg-indigo-600"
+                className="px-6 py-2 font-bold rounded-full text-white text-base bg-indigo-500 hover:bg-indigo-600 flex justify-center items-center"
                 onClick={handleGenerateImage}
                 disabled={processing}
               >

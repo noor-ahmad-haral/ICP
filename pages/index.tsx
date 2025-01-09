@@ -42,12 +42,12 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-1/2 p-6 text-center md:text-left">
-              <h3 className="text-xl md:text-2xl font-semibold text-blue-900">Erase any background</h3>
+              <h3 className="text-xl md:text-2xl font-semibold text-blue-900">AI Background Remover</h3>
               <p className="mt-4 text-gray-600 leading-relaxed text-sm md:text-base">
-                Edit photos quickly and accurately without any effort. Photoaura simplifies your images, maintaining focus on the foreground and is twice as accurate as other apps.
+              Remove backgrounds from your photos with precision and speed. Achieve clean, professional images in seconds using advanced AI tools, perfect for product photography, portraits, or creative projects!
               </p>
               <button className="mt-6 px-6 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors">
-                <Link href="/tools/background-remover">Background Remover</Link>
+                <Link href="/tools/background-remover">Try Now!</Link>
               </button>
             </div>
           </div>
@@ -66,12 +66,12 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-1/2 p-6 text-center md:text-left">
-              <h3 className="text-xl md:text-2xl font-semibold text-blue-900">Upscale Images with AI</h3>
+              <h3 className="text-xl md:text-2xl font-semibold text-blue-900">AI Image Upscaler</h3>
               <p className="mt-4 text-gray-600 leading-relaxed text-sm md:text-base">
-                ImageCraftPro uses the power of AI to create realistic, studio-quality backgrounds for your product images in seconds.
+              Enhance your images with cutting-edge AI technology, delivering sharp, high-resolution results instantly. ImageCraftPro ensures your product visuals stand out with studio-quality clarity and detail, perfect for professional presentations.
               </p>
               <button className="mt-6 px-6 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors">
-                <Link href="/tools/image-upscaler">Image Upscaler</Link>
+                <Link href="/tools/image-upscaler">Try Now!</Link>
               </button>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function Home() {
             <div className="w-full md:w-1/2 p-4">
               <div className="flex justify-center">
                 <Image
-                  src="/tools-images/background-remover.jpg"
+                  src="/tools-images/image-denoise.jpg"
                   alt="Erase any background"
                   width={500}
                   height={500}
@@ -90,12 +90,12 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-1/2 p-6 text-center md:text-left">
-              <h3 className="text-xl md:text-2xl font-semibold text-blue-900">Erase any background</h3>
+              <h3 className="text-xl md:text-2xl font-semibold text-blue-900">Image Denoiser</h3>
               <p className="mt-4 text-gray-600 leading-relaxed text-sm md:text-base">
-                Edit photos quickly and accurately without any effort. Photoaura simplifies your images, maintaining focus on the foreground and is twice as accurate as other apps.
+              Enhance the clarity of your images by removing unwanted noise and grain. Perfect for improving low-light or high-ISO photos, our tool ensures sharper and cleaner results without losing details. Transform noisy visuals into professional-quality images effortlessly.
               </p>
               <button className="mt-6 px-6 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors">
-                <Link href="/tools/background-remover">Background Remover</Link>
+                <Link href="/tools/image-denoiser">Try Now! </Link>
               </button>
             </div>
           </div>

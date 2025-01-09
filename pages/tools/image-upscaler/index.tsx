@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/footer";
 // import ImageComparison from "@/components/ImageComparison";
 import { ClipLoader } from 'react-spinners';
+import ReleatedTools from '@/components/releatedTools';
 
 const SmartImageUpscaler: React.FC = () => {
   const [selectedUpscale, setSelectedUpscale] = useState<number>(2);
@@ -87,12 +88,28 @@ const SmartImageUpscaler: React.FC = () => {
     <div>
       <Header />
       <div className="mx-auto max-w-screen-md">
-        <h1 className="mb-6 text-4xl font-bold flex justify-center tracking-tight leading-none text-gray-900 md:text-5xl">
-          Smart Image Upscaler
-        </h1>
-        <p className="mb-8 text-base font-light flex justify-center text-gray-500">
-          Upscale and enhance your JPG, PNG images in batch process.
-        </p>
+  <h1 className="mb-6 text-4xl font-bold flex justify-center tracking-tight leading-none text-gray-900 md:text-5xl">
+    Smart Image Upscaler
+  </h1>
+  <p className="mb-8 text-base font-light flex justify-center text-gray-500">
+    Upscale and enhance your JPG, PNG images in batch process.
+  </p>
+
+  {/* Video Section */}
+  <div className="flex justify-center mb-6">
+    <video 
+      className="rounded-lg" 
+      width="240" 
+      height="240" 
+      autoPlay 
+      loop 
+      muted
+    >
+      <source src="/upscaler.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+        
         <div className="w-full py-8">
           <div className="flex flex-col border border-dashed border-[#D9DBE0] rounded-xl bg-[#F7F9FC]">
             <div className="flex justify-center items-center h-[28vh] rounded-lg">
@@ -146,7 +163,7 @@ const SmartImageUpscaler: React.FC = () => {
               </label>
             </div>
             <div className="flex justify-center space-x-4 mt-8">
-              <button className="px-6 py-2 font-bold rounded-full text-white text-base bg-indigo-500 hover:bg-indigo-600" onClick={handleStartAll}>
+              <button className="px-6 py-2 font-bold rounded-full text-white text-base bg-indigo-500 hover:bg-indigo-600 flex justify-center items-center" onClick={handleStartAll}>
                 {processing ? (
                   <>
                     <ClipLoader size={20} color={"#fff"} />
@@ -182,10 +199,10 @@ const SmartImageUpscaler: React.FC = () => {
       </div>
       <div className='flex justify-center items-center gap-12 max-w-[1200px] mx-auto my-32'>
         <div className='flex flex-col justify-start items-start gap-2'>
-          <h1 className='font-bold max-w-[500px] text-xl'>Remove backgrounds 100% automatically in 5 seconds with one click</h1>
-          <p className='max-w-[500px] text-[#454545]'>Thanks to remove.bg's clever AI, you can slash editing time - and have more fun!
+          <h1 className='font-bold max-w-[500px] text-xl'>Upscale images 100% automatically in seconds with one click</h1>
+          <p className='max-w-[500px] text-[#454545]'>Thanks to advanced AI technology, you can effortlessly enhance and upscale your images without losing quality.
             <br />
-            No matter if you want to make a background transparent (PNG), add a white background to a photo, extract or isolate the subject, or get the cutout of a photo - you can do all this and more with remove.bg, the AI background remover for professionals.</p>
+            Whether you need to sharpen details, improve resolution for large displays, or breathe new life into low-quality photos, our AI-powered upscaler delivers stunning results. Perfect for professionals and creators looking to elevate their visuals..</p>
         </div>
         <div>
           <img src="/all-pages-2.png" alt="" className='w-[250px]' />
@@ -197,9 +214,9 @@ const SmartImageUpscaler: React.FC = () => {
         </div>
         <div className='flex flex-col justify-start items-start gap-2'>
           <h1 className='font-bold max-w-[500px] text-xl'>Remove backgrounds 100% automatically in 5 seconds with one click</h1>
-          <p className='max-w-[500px] text-[#454545]'>Thanks to remove.bg's clever AI, you can slash editing time - and have more fun!
+          <p className='max-w-[500px] text-[#454545]'>Thanks to advanced AI technology, you can effortlessly enhance and upscale your images without losing quality.
             <br />
-            No matter if you want to make a background transparent (PNG), add a white background to a photo, extract or isolate the subject, or get the cutout of a photo - you can do all this and more with remove.bg, the AI background remover for professionals.</p>
+            Whether you need to sharpen details, improve resolution for large displays, or breathe new life into low-quality photos, our AI-powered upscaler delivers stunning results. Perfect for professionals and creators looking to elevate their visuals.</p>
         </div>
 
       </div>
@@ -215,14 +232,13 @@ const SmartImageUpscaler: React.FC = () => {
           <img src="/all-pages-2.png" alt="" className='w-[250px]' />
         </div>
       </div>
+      <ReleatedTools />
       <Footer />
     </div>
   );
 };
 
 export default SmartImageUpscaler;
-
-
 
 
 // for 8x

@@ -635,11 +635,11 @@ const BackgroundRemoverPage: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow flex flex-col items-center justify-center  p-4">
+      <main className="flex-grow flex flex-col items-center justify-center p-4 ">
         <Head>
           <title>Background Remover</title>
         </Head>
-        <div className="text-center p-8 bg-white shadow-lg rounded-lg max-w-2xl w-full">
+        <div className="text-center p-8 bg-white shadow-lg rounded-lg max-w-2xl w-full border border-gray-200">
           <h1 className="text-4xl font-bold mb-4 text-gray-800">Background Remover</h1>
           <p className="mb-6 text-gray-600">
             Erase image backgrounds for free and replace them with different backgrounds of your choosing.
@@ -812,7 +812,6 @@ const BackgroundRemoverPage: React.FC = () => {
             <div className="text-center text-gray-600">No images available for this category.</div>
           )}
         </div>
-        <div>sdfadsfas</div>
       </div>
 
       <div className='flex justify-center items-center gap-12 max-w-[1200px] mx-auto my-32'>

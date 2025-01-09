@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { X, Upload, Download } from 'lucide-react';
 import Layout from "/layouts/default";
 import HamaTips from "@/components/HamaTips";
+import ReleatedTools from '@/components/releatedTools';
 
 interface ObjectRemoverProps {
   initialBrushSize?: number;
@@ -256,21 +257,13 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
   return (
     <Layout>
       <div className="flex flex-col items-center min-h-screen p-4">
-        {/* <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 flex items-center justify-center">
-            <Upload className="mr-2" /> Remove unwanted objects from your photos with AI
-          </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Paint over the objects you want to remove and let AI do the magic.
-          </p>
-        </div> */}
-
-        <div className='flex justify-center items-center gap-12 max-w-[1000px] mx-auto my-32'>
+        <h1 className="text-4xl font-bold mb-4 pt-10 ">Object Remover</h1>
+        <div className='flex justify-center items-center gap-8 max-w-[1000px] mx-auto my-32 shadow-lg p-8 rounded-xl bg-white'>
           <div className='flex flex-col justify-start items-start gap-2'>
             <h1 className="text-4xl font-bold mb-2 flex items-start justify-start">
               {/* <Upload className="mr-2" />  */}
               Remove unwanted objects from your photos with AI
-            </h1>          <p className="text-gray-600 max-w-2xl ">
+            </h1>          <p className="text-gray-600 max-w-2xl mb-4 ">
               Paint over the objects you want to remove and let AI do the magic.
             </p>
           </div>
@@ -307,7 +300,7 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
         </div>
         {!selectedImage ? (
           <div
-            className="bg-white rounded-lg p-8 w-full max-w-2xl text-center border-dashed border-2 border-gray-200"
+            className="bg-white rounded-lg p-8 w-full max-w-2xl text-center border-dashed border-2 border-black-200"
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
           >
@@ -435,7 +428,7 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
         </div>
         
       </div>
-
+      <ReleatedTools />
     </Layout>
   );
 };

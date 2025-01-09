@@ -69,7 +69,7 @@ const ChatComponent: React.FC = () => {
   const respondToUser = async (userMessage: string) => {
     showTypingIndicator();
     try {
-      const response = await axios.post('http://localhost:8000/ask', {
+      const response = await axios.post('http://localhost:8080/ask', {
         question: userMessage,
       });
       hideTypingIndicator();
