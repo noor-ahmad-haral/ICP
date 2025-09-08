@@ -717,10 +717,6 @@ const BackgroundRemoverPage: React.FC = () => {
                         width: `${Math.max(brushSize, 20)}px`,
                         height: `${Math.max(brushSize, 20)}px`,
                       }}
-                      style={{
-                        width: `${Math.max(brushSize, 20)}px`,
-                        height: `${Math.max(brushSize, 20)}px`,
-                      }}
                     />
                     <span className="ml-2 text-sm text-gray-600">Brush Preview</span>
                   </div>

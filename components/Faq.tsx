@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
 const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   // fix the issue by adding the following code
-  const toggleDetails = (index) => {
+  const toggleDetails = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 

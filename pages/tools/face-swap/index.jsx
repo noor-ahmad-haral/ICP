@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Footer from '@/components/footer';
 import { Notifications, showNotification } from '@/components/Notification';
-import { Upload, Loader, CheckCircle, AlertCircle } from 'lucide-react';
+import { Upload, Loader, CheckCircle, AlertCircle, Download } from 'lucide-react';
 
 const sampleSourceImages = [
   '/face-swap/face swap images1.webp',
@@ -66,7 +66,7 @@ const FaceSwapTool = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUzMDA1ODUsInByb2R1Y3RfY29kZSI6IjA2NzAwMyIsInRpbWUiOjE3MzM2NTI3NjZ9.nLa1CmPtLww4PM7Gkjc6RXFGSs-NY8lQ5BbApfKzdj8', // Replace with your API key
+            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUzNTgyNzMsInByb2R1Y3RfY29kZSI6IjA2NzAwMyIsInRpbWUiOjE3MzM4NTAxNzZ9.0dTFO6CaccB8Scg4XuHdFBYDehgHAzx5Q3oUtJ9nOGw', // Replace with your API key
           },
         }
       );
@@ -86,7 +86,7 @@ const FaceSwapTool = () => {
             {
               headers: {
                 'accept': 'application/json',
-                'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUzMDA1ODUsInByb2R1Y3RfY29kZSI6IjA2NzAwMyIsInRpbWUiOjE3MzM2NTI3NjZ9.nLa1CmPtLww4PM7Gkjc6RXFGSs-NY8lQ5BbApfKzdj8', // Replace with your API key
+                'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUzNTgyNzMsInByb2R1Y3RfY29kZSI6IjA2NzAwMyIsInRpbWUiOjE3MzM4NTAxNzZ9.0dTFO6CaccB8Scg4XuHdFBYDehgHAzx5Q3oUtJ9nOGw', // Replace with your API key
               },
             }
           );
@@ -123,6 +123,30 @@ const FaceSwapTool = () => {
     } finally {
       setProcessing(false);
     }
+  };
+
+  const handleDownload = () => {
+    if (!swappedImageUrl) {
+      showNotification.error('No image to download');
+      return;
+    }
+
+    // Create a temporary link to download the image
+    const link = document.createElement('a');
+    link.href = swappedImageUrl;
+    link.download = `face-swapped-${Date.now()}.jpg`;
+    link.target = '_blank';
+    
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showNotification.success(
+      <>
+        <CheckCircle size={16} /> Image downloaded successfully!
+      </>
+    );
   };
 
   return (
@@ -259,6 +283,15 @@ const FaceSwapTool = () => {
                 width={400}
                 height={400}
               />
+            </div>
+            <div className="flex justify-center mt-4">
+              <button
+                className="px-6 py-3 font-bold rounded-full text-white text-base bg-green-500 hover:bg-green-600 flex items-center space-x-2 transition-all"
+                onClick={handleDownload}
+              >
+                <Download size={20} />
+                <span>Download Image</span>
+              </button>
             </div>
           </div>
         )}

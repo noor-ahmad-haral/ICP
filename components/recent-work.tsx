@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "next/link";
+import Link from "next/link";
 
 const RecentWork = () => {
-  const [visibleProjects, setVisibleProjects] = useState(6);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [visibleProjects, setVisibleProjects] = useState<number>(6);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const handleShowMoreProjects = () => {
     setVisibleProjects((prev) => prev + 6);
   };
 
-  const handleCategoryChange = (category) => {
+  const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
     setVisibleProjects(6); // Reset visible projects when category changes
   };
@@ -176,16 +176,16 @@ const RecentWork = () => {
             >
               <img
                 src={item?.imageUrl}
-                alt={Screenshot of ${item?.title}}
+                alt={`Screenshot of ${item?.title}`}
                 className="w-full h-full object-cover object-center"
               />
               <div
-                className={w-full h-full absolute hover:bg-[#141c3a] ${item?.bgColor} top-0 transition-all ease-in-out duration-500}
+                className={`w-full h-full absolute hover:bg-[#141c3a] ${item?.bgColor} top-0 transition-all ease-in-out duration-500`}
               >
                 <div className="w-full group-hover:-translate-y-60 flex justify-center items-center h-full transition-all ease-in-out duration-500">
                   <img
                     src={item?.logourl}
-                    alt={Logo of ${item?.title}}
+                    alt={`Logo of ${item?.title}`}
                     className="max-w-[150px] px-[3px] max-h-[60px]"
                   />
                   <p className="font-semibold text-white max-w-36 px-1">

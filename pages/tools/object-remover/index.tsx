@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Upload, Download } from 'lucide-react';
-import Layout from "/layouts/default";
+import Layout from "@/layouts/default";
 import HamaTips from "@/components/HamaTips";
 
 interface ObjectRemoverProps {
@@ -244,7 +244,9 @@ const ObjectRemover: React.FC<ObjectRemoverProps> = ({
       return;
     }
   
-    const imageToDownload = processedImage || canvasRef.current.toDataURL('image/png');
+    const imageToDownload = processedImage || canvasRef.current?.toDataURL('image/png');
+    if (!imageToDownload) return;
+    
     const link = document.createElement('a');
     link.download = 'edited-image.png';
     link.href = imageToDownload;

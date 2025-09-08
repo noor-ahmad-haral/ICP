@@ -3,7 +3,6 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { title, subtitle } from "@/components/primitives";
 import Layout from "../layouts/default";
-import WhyUs from "@/components/WhyUs";
 import {MarqueeDemo} from "@/components/Marquee";
 
 export default function Home() {

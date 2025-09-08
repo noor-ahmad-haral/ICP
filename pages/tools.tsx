@@ -205,7 +205,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Footer from '@/components/footer';
 import { useSession, signIn } from 'next-auth/react'; // Import useSession and signIn
 import { useRouter } from 'next/router';
 import Modal from 'react-modal'; // Import react-modal

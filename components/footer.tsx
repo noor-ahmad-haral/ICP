@@ -1,80 +1,3 @@
-// import React from 'react';
-// import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
-// import { AiOutlineTool } from 'react-icons/ai'; // Tool icon
-// import { MdOutlineLibraryBooks } from 'react-icons/md'; // Library icon
-// import { AiOutlineRead } from 'react-icons/ai'; // Read icon
-
-// const Footer: React.FC = () => {
-//   return (
-//     <footer className="bg-[#F2F3F7] text-gray-700">
-//       <div className="container mx-auto px-6 py-8">
-//         <div className="flex flex-wrap justify-between">
-//           <div className="w-full md:w-1/5 mb-6 md:mb-0">
-//             <h5 className="uppercase mb-4 font-semibold text-gray-800">Follow us</h5>
-//             <div className="flex space-x-4">
-//               <a href="#" aria-label="Facebook" className="hover:text-blue-600 transition duration-300">
-//                 <FaFacebookF />
-//               </a>
-//               <a href="#" aria-label="Twitter" className="hover:text-blue-600 transition duration-300">
-//                 <FaTwitter />
-//               </a>
-//               <a href="#" aria-label="Instagram" className="hover:text-blue-600 transition duration-300">
-//                 <FaInstagram />
-//               </a>
-//               <a href="#" aria-label="LinkedIn" className="hover:text-blue-600 transition duration-300">
-//                 <FaLinkedinIn />
-//               </a>
-//             </div>
-//           </div>
-
-//           <div className="w-full md:w-1/5 mb-6 md:mb-0">
-//             <h5 className="uppercase mb-4 font-semibold text-gray-800 flex items-center">
-//               <AiOutlineTool className="mr-2" /> Free tools
-//             </h5>
-//             <ul>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">All AI tools</li>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">AI Backgrounds</li>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">AI Shadows</li>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">
-//                 AI Expand <span className="text-xs bg-red-500 px-2 py-1 rounded-full text-white">New</span>
-//               </li>
-//             </ul>
-//           </div>
-
-//           <div className="w-full md:w-1/5 mb-6 md:mb-0">
-//             <h5 className="uppercase mb-4 font-semibold text-gray-800 flex items-center">
-//               <MdOutlineLibraryBooks className="mr-2" /> Company
-//             </h5>
-//             <ul>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">About us</li>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">Pricing</li>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">Press Kit</li>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">Blog</li>
-//             </ul>
-//           </div>
-
-//           <div className="w-full md:w-1/5">
-//             <h5 className="uppercase mb-4 font-semibold text-gray-800 flex items-center">
-//               <AiOutlineRead className="mr-2" /> Help & legal
-//             </h5>
-//             <ul>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">Help center</li>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">Facebook community</li>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">Terms & conditions</li>
-//               <li className="mb-2 hover:text-blue-600 transition duration-300">Privacy policy</li>
-//             </ul>
-//           </div>
-//         </div>
-//       </div>
-//       <div className="bg-[#E0E0E0] py-4 text-center text-sm text-gray-500">
-//         © 2024 Your Company. All rights reserved.
-//       </div>
-//     </footer>
-//   );
-// };
-
-// export default Footer;
-
 import React from 'react';
 
 type NavigationItem = {
@@ -193,10 +116,10 @@ export default function Footer() {
           <div className="space-y-8">
             <img
               alt="Image Craft Pro"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-              className="h-7"
+              src="/white-logo.png"
+              className="h-40"
             />
-            <p className="text-sm leading-6 text-gray-300">
+            <p className="text-sm leading-6 text-gray-300 max-w-[300px]">
               Making the dditing process easier by using AI tools. We are a team of software engineers and creative
             </p>
             {/* <div className="flex space-x-6">
@@ -258,7 +181,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-16 border-t border-white/10 pt-8 sm:mt-20 lg:mt-24">
-          <p className="text-xs leading-5 text-gray-400">&copy; 2020 Your Company, Inc. All rights reserved.</p>
+          <p className="text-xs leading-5 text-gray-400">&copy; 2025 Your Company, Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>

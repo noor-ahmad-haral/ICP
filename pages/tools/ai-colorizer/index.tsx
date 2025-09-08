@@ -177,7 +177,6 @@ const AIColorizer: React.FC = () => {
                     leftImage={originalImageUrl!}
                     rightImage={imageUrl}
                     sliderLineColor="#000"
-                    sliderHandleColor="#000"
                   />
                   <span className="absolute top-1/2 left-2 transform -translate-y-1/2 text-white bg-black px-2 py-1 rounded">Before</span>
                   <span className="absolute top-1/2 right-2 transform -translate-y-1/2 text-white bg-black px-2 py-1 rounded">After</span>
